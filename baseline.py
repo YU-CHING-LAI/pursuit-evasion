@@ -35,8 +35,13 @@ def evaluate(env, pursuer_policy, evader_policy, num_episodes=1000):
 
 
 if __name__ == "__main__":
-    env = PursuitEvasionGrid(n=10, obstacles=[(4, 4), (4, 5)], seed=0)
-    rate, steps = evaluate(env, random_policy, random_policy)
-    print(f"capture rate: {rate:.1%}")
-    print(f"average steps to capture: {steps:.1f}")
+    env_no = PursuitEvasionGrid(n=10, seed=0)
+    env_hole = PursuitEvasionGrid(n=10, obstacles=[(4, 4), (4, 5)], seed=0)
+    env_wall = PursuitEvasionGrid(n=10, obstacles=[(4, 0), (4, 1), (4, 2)], seed=0)
+    env_set = [env_no, env_hole, env_wall]
+
+    for env in env_set:
+        rate, steps = evaluate(env, random_policy, random_policy)
+        print(f"capture rate: {rate:.1%}")
+        print(f"average steps to capture: {steps:.1f}")
     
