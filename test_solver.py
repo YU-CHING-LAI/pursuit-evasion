@@ -3,11 +3,6 @@ from env import PursuitEvasionGrid
 from baseline import evaluate, random_policy
 from solver import value_iteration, optimal_policies
 
-# 追捕者和逃跑者相鄰，輪到追捕者	V0[p, e] == 1
-# 同上，但輪到逃跑者	V1[p, e] >= 2，因為逃跑者會先逃開
-
-    
-
 # optimal pursuer & optimal evader
 env_no = PursuitEvasionGrid(n=10, seed=0)
 env_hole = PursuitEvasionGrid(n=10, obstacles=[(4, 4), (4, 5)], seed=0)

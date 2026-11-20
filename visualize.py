@@ -51,14 +51,14 @@ if __name__ == "__main__":
     os.makedirs("outputs", exist_ok=True)
 
     env_ran = PursuitEvasionGrid(n=10, obstacles=[(4, 0), (4, 1), (4, 2)], seed=0)
-    path_ran = "outputs/animate_test_env_random.gif"
+    path_ran = "outputs/random_vs_random.gif"
     animate_episode(env_ran, random_policy, random_policy, path_ran)
     print("done, total steps: ", env_ran.t)
 
     env_opt = PursuitEvasionGrid(n=10, obstacles=[(4, 0), (4, 1), (4, 2)], seed=0)
     V0, V1, iters = value_iteration(env_opt)
     optimal_pursuer, optimal_evader = optimal_policies(V0, V1, env_opt.neighbors)
-    path_opt = "outputs/animate_test_env_optimal.gif"
+    path_opt = "outputs/optimal_vs_optimal.gif"
     animate_episode(env_opt, optimal_pursuer, optimal_evader, path_opt)
     print("done, total steps: ", env_opt.t)
 
