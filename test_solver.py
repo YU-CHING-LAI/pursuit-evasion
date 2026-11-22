@@ -20,15 +20,25 @@ for name, env in zip(names, env_set):
     print(f"capture rate: {rate:.1%}")
     print(f"average steps to capture: {steps:.1f}")
 
-# optimal pursuer & random
-env_random_evader = PursuitEvasionGrid(n=10, obstacles=[(4, 0), (4, 1), (4, 2)], seed=0)
+# optimal pursuer & random evader
+env_opt_ran = PursuitEvasionGrid(n=10, obstacles=[(4, 0), (4, 1), (4, 2)], seed=0)
 print(f"\n====== optimal pursuer & random evader with wall ======\n")
-V0, V1, iters = value_iteration(env_random_evader)
+V0, V1, iters = value_iteration(env_opt_ran)
 print("iteration:", iters)
-optimal_pursuer, optimal_evader = optimal_policies(V0, V1, env_random_evader.neighbors)
-rate, steps = evaluate(env_random_evader, optimal_pursuer, random_policy)
+optimal_pursuer, optimal_evader = optimal_policies(V0, V1, env_opt_ran.neighbors)
+rate, steps = evaluate(env_opt_ran, optimal_pursuer, random_policy)
 print(f"capture rate: {rate:.1%}")
 print(f"average steps to capture: {steps:.1f}")
+
+# random pursuer & random evader
+env_random = PursuitEvasionGrid(n=10, obstacles=[(4, 0), (4, 1), (4, 2)], seed=0)
+print(f"\n====== random pursuer & random evader with wall ======\n")
+V0, V1, iters = value_iteration(env_random)
+print("iteration:", iters)
+rate, steps = evaluate(env_random, random_policy, random_policy)
+print(f"capture rate: {rate:.1%}")
+print(f"average steps to capture: {steps:.1f}")
+
 
 # Adjacent, pursuer's turn: capture on the next move
 p, e = env.to_idx(2, 7), env.to_idx(2, 8)

@@ -19,7 +19,7 @@ def fig_to_array(fig):
     return np.asarray(fig.canvas.buffer_rgba())[:, :, :3]
 
 
-def animate_episode(env, pursuer_policy, evader_policy, path):
+def animate_episode(env, pursuer_policy, evader_policy, path, title=""):
     state = env.reset()
     states = [(env.pursuer, env.evader, env.turn, env.t)]
     done = False
@@ -31,6 +31,7 @@ def animate_episode(env, pursuer_policy, evader_policy, path):
         state, reward, done = env.step(action)
         states.append((env.pursuer, env.evader, env.turn, env.t))
     fig, ax = plt.subplots()
+    fig.suptitle(title)  
 
     def update(i):
         ax.clear()
@@ -50,17 +51,24 @@ if __name__ == "__main__":
     import os
     os.makedirs("outputs", exist_ok=True)
 
-    env_ran = PursuitEvasionGrid(n=10, obstacles=[(4, 0), (4, 1), (4, 2)], seed=0)
+    env_ran_ran = PursuitEvasionGrid(n=10, obstacles=[(4, 0), (4, 1), (4, 2)], seed=0)
     path_ran = "outputs/random_vs_random.gif"
-    animate_episode(env_ran, random_policy, random_policy, path_ran)
-    print("done, total steps: ", env_ran.t)
+    animate_episode(env_ran_ran, random_policy, random_policy, path_ran, "random pursuer v.s. random evader")
+    print("done, total steps: ", env_ran_ran.t)
 
-    env_opt = PursuitEvasionGrid(n=10, obstacles=[(4, 0), (4, 1), (4, 2)], seed=0)
-    V0, V1, iters = value_iteration(env_opt)
-    optimal_pursuer, optimal_evader = optimal_policies(V0, V1, env_opt.neighbors)
+    env_opt_ran = PursuitEvasionGrid(n=10, obstacles=[(4, 0), (4, 1), (4, 2)], seed=0)
+    V0, V1, iters = value_iteration(env_opt_ran)
+    optimal_pursuer, optimal_evader = optimal_policies(V0, V1, env_opt_ran.neighbors)
+    path_opt = "outputs/optimal_vs_random.gif"
+    animate_episode(env_opt_ran, optimal_pursuer, random_policy, path_opt, "optimal pursuer v.s. random evader")
+    print("done, total steps: ", env_opt_ran.t)
+
+    env_opt_opt = PursuitEvasionGrid(n=10, obstacles=[(4, 0), (4, 1), (4, 2)], seed=0)
+    V0, V1, iters = value_iteration(env_opt_opt)
+    optimal_pursuer, optimal_evader = optimal_policies(V0, V1, env_opt_opt.neighbors)
     path_opt = "outputs/optimal_vs_optimal.gif"
-    animate_episode(env_opt, optimal_pursuer, optimal_evader, path_opt)
-    print("done, total steps: ", env_opt.t)
+    animate_episode(env_opt_opt, optimal_pursuer, optimal_evader, path_opt, "optimal pursuer v.s. optimal evader")
+    print("done, total steps: ", env_opt_opt.t)
 
 
     
