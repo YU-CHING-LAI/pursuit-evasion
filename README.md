@@ -86,7 +86,7 @@ Small grids run faster than the trend predicts, likely because their arrays fit 
 Extrapolating from $n = 40$ to $n = 100$ gives about 18 minutes and 10 GB of memory, so memory becomes the bottleneck first. 
 
 > Time: $$8.8 \times 2.5^{5.26} \approx 1080 s$$  
-
+> 
 > Memory: $$266 \times 2.5^4 \approx 10{,}400 MB$$   
 
 This motivates approximate methods, such as self-play reinforcement learning, for finer or continuous state spaces.
